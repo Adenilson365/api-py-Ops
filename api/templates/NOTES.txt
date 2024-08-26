@@ -1,0 +1,3 @@
+Instalando
+Ambiente instalando no Namespace: {{ .Release.Name }}
+Verificar recursos: kubectl get all -n {{ .Release.Name }}-ns

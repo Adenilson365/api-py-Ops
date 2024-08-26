@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-dp
+  labels:
+    app: {{ .Release.Name }}
+  namespace: {{ .Release.Name }}-ns
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-cont-api
+          image: {{ .Values.api.image }}
+          ports: 
+            - containerPort: 8000
+              name: http-api
+  replicas: 2
