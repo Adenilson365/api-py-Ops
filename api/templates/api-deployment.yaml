@@ -28,7 +28,7 @@ spec:
           image: jaegertracing/jaeger-agent:1.37.0
           env:
             - name: REPORTER_GRPC_HOST_PORT
-              value: my-jaeger-collector.jaeger.svc:14250
+              value: jaeger-collector.jaeger.svc:14250
           ports:
             - containerPort: 5775
               protocol: UDP
