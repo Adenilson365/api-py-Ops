@@ -38,5 +38,6 @@ spec:
               protocol: UDP
             - containerPort: 5778
               protocol: TCP
+  replicas: 2
 
 
