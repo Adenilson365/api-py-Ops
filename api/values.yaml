@@ -1,2 +1,8 @@
 api: 
   image: adenilsonkon/api-python:sha-e2ce547
+  ingress:
+    host: knz-local.com
+    ingressClassName: nginx
+  service:
+    type: ClusterIP
+    
