@@ -10,4 +10,4 @@ spec:
     - name: {{ .Release.Name }}-http
       targetPort: 8000
       port: 8000
-  type: {{ .Values.api.service.type }}
+  type: {{ .Values.api.service.type | default "ClusterIP" }}
