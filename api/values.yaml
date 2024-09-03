@@ -6,3 +6,7 @@ api:
   service:
     type: ClusterIP
     
+jaeger:
+  collector:
+    host: jaeger-collector.jaeger.svc:14250
+  

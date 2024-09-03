@@ -85,6 +85,7 @@ kubectl port-forward service/my-prometheus-server 31102:80 -n observabilidade
 helm install my-grafana grafana/grafana --version 8.5.0 --namespace observabilidade
 ```
 - Para acesso será necessário realizar o port-forward:
+- Para liberar o terminal você pode colocar o job em background adiciando **&** ao final do comando, para listar processo em background use comando **jobs**, para parar o processo use **kill** e o número do job que está entre **[]**
 ```
 kubectl port-forward service/my-grafana 31103:80 -n observabilidade
 ```
@@ -106,3 +107,21 @@ kubectl port-forward service/my-grafana 31103:80 -n observabilidade
   - Caso tenha alterado o nome da release ao instalar, use o nome do seu serviço prometheus (finalizado em server).
   - se OK, ao clicar em save e test terá mensagem de sucesso e seu grafana está conectado ao prometheus. 
   - Basta criar seus Dashboards.
+  - [Biblioteca de Dasboards GrafanaLabs](https://grafana.com/grafana/dashboards/) 
+  - Escolha e selecione seu dashboard, copy o código ou arquivo JSON
+    ![grafana-labs-dash](/doc-assets/grafana-labs-dash.png)
+  - No grafana no menu -> dashboards>new-import
+  - Cole o ID ou JSON e faça o load.
+  ![import-dash-grafana](/doc-assets/import-dash-grafana.png)
+  - Para essa aplicação Adicione o arquivo [dasboard.json](/doc-assets/dashboard.json)
+
+  ### Jaeger
+  - Instalar no Namespace jaeger
+  - Se optar por outro namespace, precisa alterar a variável host no values. ```jaeger-collector.novoNamespace.svc:14250```
+  ```
+  helm install jaeger jaegertracing/jaeger --version 3.2.0 --namespace jaeger
+  ```
+  - Para acesso será necessário realizar o port-forward:
+  ```
+  kubectl port-forward service/my-jaeger-query 31104:80 -n jaeger
+  ```
