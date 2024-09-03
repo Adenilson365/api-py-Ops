@@ -25,9 +25,9 @@ spec:
             - containerPort: 8000
               name: http-api
           livenessProbe:
-          httpGet:
-            port: 8000
-            path: /health
+            httpGet:
+              port: 8000
+              path: /health
           initialDelaySeconds: 30
           periodSeconds: 10
           failureThreshold: 3
