@@ -24,9 +24,19 @@ spec:
           ports:
             - containerPort: 8000
               name: http-api
+          livenessProbe:
+          httpGet:
+            port: 8000
+            path: /health
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          timeoutSeconds: 3
           env:
             - name: OTEL_SERVICE_NAME
               value: {{ .Release.Name }}-svc
+
         - name: jaeger-agent
           image: jaegertracing/jaeger-agent:1.37.0
           env:
@@ -41,6 +51,6 @@ spec:
               protocol: UDP
             - containerPort: 5778
               protocol: TCP
-  replicas: 1
+  replicas: 4
 
 

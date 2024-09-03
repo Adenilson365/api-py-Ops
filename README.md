@@ -114,6 +114,7 @@ kubectl port-forward service/my-grafana 31103:80 -n observabilidade
   - Cole o ID ou JSON e faça o load.
   ![import-dash-grafana](/doc-assets/import-dash-grafana.png)
   - Para essa aplicação Adicione o arquivo [dasboard.json](/doc-assets/dashboard.json)
+  ![dashboard](/doc-assets/Dashboard.png)
 
   ### Jaeger
   - Instalar no Namespace jaeger
