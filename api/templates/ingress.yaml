@@ -3,13 +3,10 @@ kind: Ingress
 metadata:
   name: {{ .Release.Name }}-ingress
   namespace: {{ .Release.Name }}-ns
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
-  #ingressClassName: {{ .Values.api.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.api.ingress.ingressClassName }}
   rules:
-  - host: {{ .Values.api.ingress.host }}
-    http:
+  - http:
       paths:
       - path: /
         pathType: Prefix
