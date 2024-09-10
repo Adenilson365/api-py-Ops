@@ -2,4 +2,4 @@ Instalando
 Ambiente instalando no Namespace: {{ .Release.Name }}
 Verificar recursos: kubectl get all -n {{ .Release.Name }}-ns
 Exibir a aplicação em uma porta host execute:
-kubectl port-foward service/api-lb <PortaHost>:8000 -n api-ns
+kubectl port-froward service/api-lb <PortaHost>:8000 -n api-ns

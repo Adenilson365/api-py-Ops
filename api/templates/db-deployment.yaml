@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-psql-db
+  namespace: {{ .Release.Name }}-ns 
+spec:
+  serviceName: {{ .Release.Name }}
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-psql
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-psql
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-psql
+          image: postgres:15.0
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: "admin"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: POSTGRES_PASSWORD
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - name: {{ .Release.Name }}-db-vol
+              mountPath: /var/lib/postgresql/data/pgdata
+      volumes: 
+        - name: {{ .Release.Name }}-db-vol 
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-db-pvc      
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-adminer-deploy
+  namespace: {{ .Release.Name }}-ns
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-adminer
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-adminer
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-ad-cont
+        image: adminer
+  replicas: 1

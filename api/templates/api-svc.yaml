@@ -10,4 +10,5 @@ spec:
     - name: {{ .Release.Name }}-http
       targetPort: 8000
       port: 8000
+      nodePort: 32600
   type: {{ .Values.api.service.type | default "ClusterIP" }}

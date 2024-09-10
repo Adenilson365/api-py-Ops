@@ -4,7 +4,7 @@ api:
     host: knz-local.com
     ingressClassName: nginx
   service:
-    type: ClusterIP
+    type: NodePort
     
 jaeger:
   collector:
