@@ -60,4 +60,19 @@ spec:
       containers:
       - name: {{ .Release.Name }}-ad-cont
         image: adminer
+        env:
+          - name: ADMINER_DEFAULT_SERVER
+            value: {{ .Release.Name }}-db-svc
+          - name: ADMINER_DEFAULT_DB
+            value: "admin"
+          - name: ADMINER_DEFAULT_USER
+            valueFrom:
+                  secretKeyRef:
+                    name: db-secret
+                    key: POSTGRES_USER
+          - name: ADMINER_DEFAULT_PASSWORD
+            valueFrom:
+                  secretKeyRef:
+                    name: db-secret
+                    key: POSTGRES_PASSWORD
   replicas: 1
