@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-metrics-svc
+  labels:
+    app: {{ .Release.Name }}
+    release: my-kube-prometheus-stack 
+    app.kubernetes.io/managed-by: prometheus-operator
+    app.kubernetes.io/name: {{ .Release.Name }}
+  namespace: {{ .Release.Name }}-ns
+spec:
+  selector:
+    app: {{ .Release.Name }}-app
+  ports:
+    - name: http-metrics
+      port: 8000
+      protocol: TCP
+      targetPort: 8000
+      nodePort: 32700
+  type: NodePort
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  annotations:
+    meta.helm.sh/release-name: my-kube-prometheus-stack
+    meta.helm.sh/release-namespace: default
+  name: {{ .Release.Name }}-metrics-sm
+  labels:
+    release: my-kube-prometheus-stack
+    app.kubernetes.io/managed-by: prometheus-operator
+    app.kubernetes.io/name: {{ .Release.Name }}  
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }} - app
+      release: my-kube-prometheus-stack
+  endpoints:
+  - port: http-metrics
+    bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+    path: /metrics
+  jobLabel: jobLabel
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Name }}-ns
