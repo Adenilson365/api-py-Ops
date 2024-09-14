@@ -34,7 +34,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }} - app
+      app: {{ .Release.Name }}
       release: my-kube-prometheus-stack
   endpoints:
   - port: http-metrics
