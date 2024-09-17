@@ -1,0 +1,9 @@
+api-k8s/
+list/
+assets_docs
+*.yaml
+*.md
+__pycache__/
+.github/
+pull_request_template.md
+sonar-project.properties

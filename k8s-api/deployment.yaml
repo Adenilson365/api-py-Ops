@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-python-k8s
+  labels:
+    app: api-python-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-python-k8s
+  template:
+    metadata:
+      labels:
+        app: api-python-k8s
+    spec:
+      serviceAccountName: api-python-k8s-sa
+      containers:
+      - name: api-python-k8s
+        image: adenilsonkon/api-python-k8s:v7.3
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: kube-config
+          mountPath: /root/.kube
+          readOnly: true
+      volumes:
+      - name: kube-config
+        hostPath:
+          # Para uso no k3d + WSL - alterar para kubeadm
+          # ~/.kube/config
+          path: /mnt/c/Users/adenilson.alves/.kube/config
+          type: File
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-python-k8s-service
+spec:
+  selector:
+    app: api-python-k8s
+  ports:
+    - protocol: TCP
+      port: 5000
+  type: ClusterIP  
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: api-python-k8s-sa
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-reader
+  namespace: api-ns
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list", "get", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-reader-binding
+  namespace: api-ns
+subjects:
+- kind: ServiceAccount
+  name: api-python-k8s-sa
+  namespace: default
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+
+ 

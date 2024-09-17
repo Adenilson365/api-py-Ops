@@ -1,0 +1,13 @@
+
+services:
+  app:
+    container_name: api-python-k8s
+    image: adenilsonkon/api-python-k8s:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    volumes:
+      - ~/.kube/config:/home/adenilson/.kube/config  # Mapeia o kubeconfig local para o container
