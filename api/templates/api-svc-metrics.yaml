@@ -30,7 +30,7 @@ metadata:
     release: my-kube-prometheus-stack
     app.kubernetes.io/managed-by: prometheus-operator
     app.kubernetes.io/name: {{ .Release.Name }}  
-  namespace: default
+  namespace: obs
 spec:
   selector:
     matchLabels:

@@ -1,7 +1,7 @@
 
 # SG EC2
 resource "aws_security_group" "sg-001" {
-  name        = "sg-001-alert-allow-full"
+  name        = "security-001-alert-allow-full"
   description = "Security group test tf"
   vpc_id      = aws_vpc.vpc-tf.id
   tags        = var.default_tags

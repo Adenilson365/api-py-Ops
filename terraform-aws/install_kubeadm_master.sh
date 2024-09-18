@@ -96,7 +96,10 @@ apt-get install helm -y
 #git
 apt install git -y
 
-# download do manifesto do calico
-# para subir a rede ao iniciar o cluster
 cd /home/admin
-wget https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/calico.yaml
+
+# download dos manifestos dos utilitários de rede e monitoramento
+# nginx ingress, metrics-server, calico cni
+wget -O nginx-baremetal.yaml https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.11.2/deploy/static/provider/baremetal/deploy.yaml
+wget -O metrics-server.yaml https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+wget -O calico-cni.yaml https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/calico.yaml
