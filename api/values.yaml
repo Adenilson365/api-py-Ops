@@ -1,5 +1,5 @@
 api: 
-  image: adenilsonkon/api-python:sha-d005333
+  image: adenilsonkon/api-python:sha-131cb74
   ingress:
     host: knz-local.com
     ingressClassName: nginx
